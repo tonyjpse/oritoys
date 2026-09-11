@@ -480,5 +480,121 @@ Beli sekarang melalui oritoys onlapak yang memberikan pilihan toko terbaik dan t
     // Jalankan Render pertama kali saat halaman dimuat
     renderCatalog();
   </script>
+
+<style>
+  /* Overlay latar belakang gelap transparan (Sembunyi secara default) */
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: none; /* Sembunyi secara default */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  /* Wadah popup ukuran sedang (rasio 9:16) */
+  .popup-content {
+    position: relative;
+    width: 320px; /* Ukuran lebar sedang */
+    max-width: 90%;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  }
+
+  /* Frame Video Google Drive */
+  .popup-content iframe {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    border: none;
+    display: block;
+  }
+
+  /* Tombol Tutup (X) */
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: background 0.2s;
+  }
+
+  .close-btn:hover {
+    background: rgba(255, 0, 0, 0.8);
+  }
+</style>
+
+<!-- Modal Popup -->
+<div class="popup-overlay" id="videoPopup">
+  <div class="popup-content">
+    <!-- Tombol Close X -->
+    <button class="close-btn" onclick="closePopup()">&times;</button>
+    
+    <!-- Iframe Video Google Drive (src diisi otomatis lewat JS saat popup muncul) -->
+    <iframe 
+      id="driveIframe"
+      src="" 
+      allow="autoplay">
+    </iframe>
+    <br/>
+<!-- Contoh tombol di bawah iframe dalam popup -->
+<a href="#katalog-bite-choicar" onclick="closePopup()" style="display:block; text-align:center; background:#ff5722; color:#fff; padding:10px; text-decoration:none; font-weight:bold; border-radius:8px; margin-top:10px;">
+  Lihat Produk Bite Choicar 🏎️
+</a>
+    
+  </div>
+</div>
+
+<script>
+  // Pengaturan URL Video & Jeda Waktu (dalam milidetik)
+  const videoUrl = "https://drive.google.com/file/d/10XpRPDtbWTTLsufPevjL8gK15sg8yR7I/preview";
+  const delayTime = 3000; // 3000 ms = 3 detik (Ubah sesuai keinginanmu)
+
+  // Munculkan popup secara otomatis setelah jeda waktu
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const popup = document.getElementById('videoPopup');
+      const iframe = document.getElementById('driveIframe');
+      
+      // Pasang URL video agar baru mulai memuat/memutar saat popup muncul
+      iframe.src = videoUrl;
+      popup.style.display = 'flex';
+    }, delayTime);
+  });
+
+  // Fungsi untuk menutup popup
+  function closePopup() {
+    const popup = document.getElementById('videoPopup');
+    const iframe = document.getElementById('driveIframe');
+    
+    // Matikan video & suara dengan mengosongkan URL iframe
+    iframe.src = ''; 
+    
+    // Sembunyikan popup
+    popup.style.display = 'none';
+  }
+</script>
+
+
+
+
+  
 </body>
 </html>
