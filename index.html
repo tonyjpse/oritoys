@@ -512,29 +512,24 @@ Beli sekarang melalui oritoys onlapak yang memberikan pilihan toko terbaik dan t
     flex-direction: column; /* Video di atas, footer di bawah */
   }
 
-  /* Container Video: Ini kunci untuk posisi ke tengah */
+/* Container Bingkai Video */
   .video-container {
     width: 100%;
-    aspect-ratio: 9 / 16; /* Menjaga proporsi video vertikal */
-    background: #000; /* Latar belakang hitam untuk video */
+    aspect-ratio: 9 / 16;
+    background: #000;
     position: relative;
-    display: flex;
-    justify-content: center; /* MEMPOSISIKAN VIDEO KE TENGAH SECARA HORIZONTAL */
-    align-items: center; /* MEMPOSISIKAN VIDEO KE TENGAH SECARA VERTIKAL (jika iframe kurang tinggi) */
-    overflow: hidden; /* Memastikan iframe tidak meluap */
+    overflow: hidden; /* Wajib untuk memotong (crop) bagian luar yang tergeser */
   }
 
-  /* Iframe Video Google Drive */
+  /* Iframe Video: Ditingkatkan lebarnya dan ditarik ke kiri untuk CROP garis hitam */
   .video-container iframe {
-    /* Atur agar iframe memenuhi container sepenuhnya dan tetap di tengah */
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    width: 140%;      /* Diperbesar agar videonya nge-zoom dan garis hitam terlempar ke luar */
     height: 100%;
+    top: 0;
+    left: -20%;       /* Ditarik 20% ke kiri untuk membuang bilah hitam di sebelah kiri */
     border: none;
     display: block;
-    object-fit: cover; /* Memastikan video memenuhi area container tanpa distorsi */
   }
 
   /* Area Deskripsi & Tombol di Bawah Video */
@@ -638,37 +633,25 @@ Beli sekarang melalui oritoys onlapak yang memberikan pilihan toko terbaik dan t
 </div>
 
 <script>
-  // Pengaturan URL Video & Jeda Waktu (dalam milidetik)
   const videoUrl = "https://drive.google.com/file/d/10XpRPDtbWTTLsufPevjL8gK15sg8yR7I/preview";
-  const delayTime = 5000; // 5000 ms = 5 detik
+  const delayTime = 5000;
 
-  // Munculkan popup secara otomatis setelah jeda waktu
   window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       const popup = document.getElementById('videoPopup');
       const iframe = document.getElementById('driveIframe');
-      
-      // Pasang URL video agar baru mulai memuat saat popup muncul
       iframe.src = videoUrl;
       popup.style.display = 'flex';
     }, delayTime);
   });
 
-  // Fungsi untuk menutup popup
   function closePopup() {
     const popup = document.getElementById('videoPopup');
     const iframe = document.getElementById('driveIframe');
-    
-    // Matikan video & suara dengan mengosongkan URL iframe
     iframe.src = ''; 
-    
-    // Sembunyikan popup
     popup.style.display = 'none';
   }
 </script>
-
-
-
   
 </body>
 </html>
