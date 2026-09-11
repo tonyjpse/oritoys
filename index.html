@@ -481,30 +481,36 @@ Beli sekarang melalui oritoys onlapak yang memberikan pilihan toko terbaik dan t
     renderCatalog();
   </script>
 
-<style>
-  /* Overlay latar belakang gelap transparan (Sembunyi secara default) */
+
+  <style>
+  /* Overlay latar belakang gelap transparan */
   .popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.8);
     display: none; /* Sembunyi secara default */
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    padding: 15px;
+    box-sizing: border-box;
   }
 
-  /* Wadah popup ukuran sedang (rasio 9:16) */
+  /* Wadah popup compact & modern */
   .popup-content {
     position: relative;
-    width: 320px; /* Ukuran lebar sedang */
+    width: 280px; /* Ukuran diperkecil sedikit agar pas di layar HP */
     max-width: 90%;
-    background: #000;
-    border-radius: 12px;
+    background: #1e1e24; /* Warna latar belakang gelap elegan */
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
   }
 
   /* Frame Video Google Drive */
@@ -513,20 +519,66 @@ Beli sekarang melalui oritoys onlapak yang memberikan pilihan toko terbaik dan t
     aspect-ratio: 9 / 16;
     border: none;
     display: block;
+    background: #000;
+  }
+
+  /* Area Deskripsi & Tombol di Bawah Video */
+  .popup-body {
+    padding: 14px 16px 16px 16px;
+    text-align: center;
+    background: #1e1e24;
+  }
+
+  .popup-title {
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0 0 6px 0;
+    font-family: sans-serif;
+  }
+
+  .popup-desc {
+    color: #b0b3b8;
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 0 0 12px 0;
+    font-family: sans-serif;
+  }
+
+  /* Tombol CTA (Call to Action) */
+  .popup-btn {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, #ff5722, #e64a19);
+    color: #ffffff;
+    padding: 10px 0;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 13px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(255, 87, 34, 0.3);
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+
+  .popup-btn:hover {
+    background: linear-gradient(135deg, #f4511e, #d84315);
+    transform: translateY(-1px);
   }
 
   /* Tombol Tutup (X) */
   .close-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.7);
+    top: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.6);
     color: #fff;
-    border: none;
-    font-size: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 18px;
     font-weight: bold;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -547,25 +599,29 @@ Beli sekarang melalui oritoys onlapak yang memberikan pilihan toko terbaik dan t
     <!-- Tombol Close X -->
     <button class="close-btn" onclick="closePopup()">&times;</button>
     
-    <!-- Iframe Video Google Drive (src diisi otomatis lewat JS saat popup muncul) -->
+    <!-- Iframe Video Google Drive -->
     <iframe 
       id="driveIframe"
       src="" 
       allow="autoplay">
     </iframe>
-    <br/>
-<!-- Contoh tombol di bawah iframe dalam popup -->
-<a href="#katalog-bite-choicar" onclick="closePopup()" style="display:block; text-align:center; background:#ff5722; color:#fff; padding:10px; text-decoration:none; font-weight:bold; border-radius:8px; margin-top:10px;">
-  Lihat Produk Bite Choicar 🏎️
-</a>
-    
+
+    <!-- Bagian Deskripsi Singkat & Tombol -->
+    <div class="popup-body">
+      <div class="popup-title">Bite Choicar In Action! 🏎️💨</div>
+      <div class="popup-desc">Mainan mobil balap seru yang bisa jalan di mana saja, bahkan meluncur pakai jalur tali tambang!</div>
+      
+      <a href="#katalog-bite-choicar" class="popup-btn" onclick="closePopup()">
+        Lihat Detail Mainan Choicar 🛒
+      </a>
+    </div>
   </div>
 </div>
 
 <script>
   // Pengaturan URL Video & Jeda Waktu (dalam milidetik)
   const videoUrl = "https://drive.google.com/file/d/10XpRPDtbWTTLsufPevjL8gK15sg8yR7I/preview";
-  const delayTime = 5000; // 5000 ms =  detik 
+  const delayTime = 5000; // 5000 ms = 5 detik
 
   // Munculkan popup secara otomatis setelah jeda waktu
   window.addEventListener('DOMContentLoaded', () => {
@@ -573,7 +629,7 @@ Beli sekarang melalui oritoys onlapak yang memberikan pilihan toko terbaik dan t
       const popup = document.getElementById('videoPopup');
       const iframe = document.getElementById('driveIframe');
       
-      // Pasang URL video agar baru mulai memuat/memutar saat popup muncul
+      // Pasang URL video agar baru mulai memuat saat popup muncul
       iframe.src = videoUrl;
       popup.style.display = 'flex';
     }, delayTime);
@@ -590,7 +646,7 @@ Beli sekarang melalui oritoys onlapak yang memberikan pilihan toko terbaik dan t
     // Sembunyikan popup
     popup.style.display = 'none';
   }
-</script>
+</script>  
 
 
 
